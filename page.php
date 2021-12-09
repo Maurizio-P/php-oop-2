@@ -9,12 +9,12 @@
 
 
     foreach ($users as $key => $user) {
+
         if ($user["prime"] === true) {
             $singleUser = new userPrime($user);
         }else {
             $singleUser = new User($user);
         }
-        
         var_dump($singleUser);
     }
 

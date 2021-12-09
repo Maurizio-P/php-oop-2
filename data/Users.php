@@ -3,7 +3,7 @@
 $users = [
     [
         "firstName" => "Maurizio",
-        "lastName" => "Pignotti",
+        "lastName" => "pignotti",
         "payments" => [
             [
                 "type" => "credit card",

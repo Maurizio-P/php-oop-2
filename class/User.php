@@ -1,6 +1,7 @@
 <?php
 
-require_once "./class/UserPrime.php";
+require "./trait/Formatters.php";
+
 
 class User {
     private $firstName;
@@ -8,10 +9,17 @@ class User {
     protected $discount;
     protected $cart = [];
 
+    use Formatters;
+
     function __construct($_user)
-    {
-        if (array_key_exists("firstName", $_user)) {
-            $this->setFirstName($_user["firstName"]);
+    {   
+        try{
+
+            if (array_key_exists("firstName", $_user)) {
+                $this->setFirstName($_user["firstName"]);
+            }
+        }catch(Exception $e){
+            echo "Eccezione: " . $e->getMessage();
         }
         if (array_key_exists("lastName", $_user)) {
             $this->setLastName($_user["lastName"]);
@@ -22,7 +30,11 @@ class User {
     }
 
     public function setFirstName($_firstName){
-        $this->firstName = $_firstName;
+        if (strlen($_firstName) > 3 ) {
+            $this->firstName = $_firstName;
+        }else{
+            throw new Exception("Nome non valido. Numero di caratteri minimi: 3.");
+        }
     }
 
     public function getFirstName(){
@@ -30,7 +42,7 @@ class User {
     }
     
     public function setLastName($_lastName){
-        $this->lastName = $_lastName;
+        $this->lastName = $this->toPascalCase($_lastName);
     }
     public function getLastName(){
         return $this->lastName;
